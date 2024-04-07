@@ -1,0 +1,14 @@
+{
+  "name": "myquant",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "yahoo-finance2": "^2.11.1"
+  }
+}
