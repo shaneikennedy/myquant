@@ -56,6 +56,8 @@ if (cacheFile.size > 0) {
 type MovingAverages = {
   threeMonth: number;
   sixMonth: number;
+  fourteenDay: number;
+  oneMonth: number;
 };
 
 type StockAnalysis = {
@@ -71,24 +73,47 @@ const analyses: Array<StockAnalysis> = universe.histories
     movingAverages: {
       sixMonth: t.history.reduce((acc, q) => (acc += q.close), 0) / (6 * 30),
       threeMonth:
-        t.history.slice(0, 90).reduce((acc, q) => (acc += q.close), 0) /
+        t.history
+          .slice(t.history.length - 90, t.history.length)
+          .reduce((acc, q) => (acc += q.close), 0) /
         (3 * 30),
+      fourteenDay:
+        t.history
+          .slice(t.history.length - 14, t.history.length)
+          .reduce((acc, q) => acc + q.close, 0) / 14,
+      oneMonth:
+        t.history
+          .slice(t.history.length - 30, t.history.length)
+          .reduce((acc, q) => acc + q.close, 0) / 30,
     },
   }));
 
-const buys = analyses.filter(
-  (a) => a.movingAverages.threeMonth > a.movingAverages.sixMonth,
-);
+const buys = analyses.filter((a) => {
+  return (
+    a.movingAverages.threeMonth > a.movingAverages.sixMonth ||
+    a.movingAverages.fourteenDay > a.movingAverages.oneMonth
+  );
+});
 
-const sells = analyses.filter(
-  (a) => a.movingAverages.threeMonth <= a.movingAverages.sixMonth,
-);
+const sells = analyses.filter((a) => {
+  return (
+    a.movingAverages.threeMonth <= a.movingAverages.sixMonth ||
+    a.movingAverages.fourteenDay <= a.movingAverages.oneMonth
+  );
+});
+
+const conflicts = sells.filter((q) => buys.find((b) => b.symbol === q.symbol));
 
 // TODO send this to telegram account
 // TODO upload buys and sells to s3
 
-// For now, just log it so we know something happened
-console.log(
-  buys.map((s) => s.symbol),
-  sells.map((s) => s.symbol),
-);
+const summary = {
+  buys: buys.map((s) => s.symbol),
+  numToBuy: buys.length,
+  sells: sells.map((s) => s.symbol),
+  numToSell: sells.length,
+  conflicts: conflicts.map((s) => s.symbol),
+  numConflicts: conflicts.length,
+};
+
+console.log(summary);
