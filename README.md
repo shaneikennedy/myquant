@@ -14,8 +14,14 @@ To install dependencies:
 bun install
 ```
 
-To run:
+To run the analysis:
 
 ```bash
-bun run index.ts
+bun run src/jobs/index.ts
+```
+
+To run the frontend
+
+```bash
+bun run dev
 ```
