@@ -17,7 +17,7 @@ bun install
 To run the analysis:
 
 ```bash
-bun run src/jobs/index.ts
+bun run src/app/jobs/index.ts
 ```
 
 To run the frontend
