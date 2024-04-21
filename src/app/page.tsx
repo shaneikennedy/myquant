@@ -27,7 +27,7 @@ export default function Home() {
       </div>
       <div className="my-2">
         {strategies.map((s) => (
-          <StrategyCard strategy={s} />
+          <StrategyCard key={s.name} strategy={s} />
         ))}
       </div>
     </div>

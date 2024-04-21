@@ -32,7 +32,7 @@ const BuySellCard = ({
       </h3>
       <ul className="space-y-2">
         {tickers.map((t) => (
-          <li className="flex justify-between items-center">
+          <li key={t.symbol} className="flex justify-between items-center">
             <div>
               <p className="font-bold">
                 {t.name} ({t.symbol})
