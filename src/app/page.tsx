@@ -22,7 +22,7 @@ export default function Home() {
       </header>
       <div className="flex">
         <div className="mt-6 mx-6 text-right text-lg font-bold">
-          Today's Date: {today}
+          Today&apos;s Date: {today}
         </div>
       </div>
       <div className="my-2">
