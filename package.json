@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.2.2",
+    "next": "15.2.4",
     "react": "^18",
     "react-dom": "^18",
-    "yahoo-finance2": "^2.11.2"
+    "yahoo-finance2": "^2.13.3"
   },
   "devDependencies": {
     "typescript": "^5",
